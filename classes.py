@@ -58,10 +58,10 @@ class Record:
                 if value==str(p):
                     self.phones.pop(self.phones.index(p))
 
-    def edit_phone(self,old_num,new_num):
+    def edit_phone(self,book, old_num,new_num):
         if self.find_phone(old_num):
             self.remove_phone(old_num)
-            self.add_phone(new_num)
+            self.add_phone(book, new_num)
         else:
             raise ValueError("Whong phone number")
 
@@ -106,16 +106,26 @@ class AddressBook(UserDict):
         for i in self.data:
             birth_dict = {}
             birth_dict['name'] = i
-            birth_dict['birthday'] = self.find(i).birthday_date()
+            birthday_date = str(self.find(i).birthday)
+            birth_dict['birthday'] = str(birthday_date)
             birth_list.append(birth_dict)
         
         upcoming_birthdays=[]
+        # print(f"birthdays {birth_list}")   
         for user in birth_list:
-
             birthday = user["birthday"]
-            print(type(birthday))
+
+            if str(birthday) == 'None':            
+                # print("sss")
+                continue
+
+            # print(f"this line {str(birthday)}")
+            bir = datetime.strptime(str(birthday), '%Y-%m-%d').date()
+            # print(type(bir))
+            # print(bir)
             today = datetime.today().date()
-            curr_birthday = datetime(today.year, birthday.month, birthday.day).date()
+            curr_birthday = datetime(today.year, bir.month, bir.day).date()
+            # print(curr_birthday)
 
             diff = curr_birthday - today
 
@@ -126,21 +136,10 @@ class AddressBook(UserDict):
                     curr_birthday = curr_birthday + timedelta(days=1)
 
                 cong_date_str = curr_birthday.strftime("%Y-%m-%d")
+                # print(f"dd{cong_date_str}")
 
                 to_congratulate = {"name": user["name"], "congratulation_date": cong_date_str}
                 upcoming_birthdays.append(to_congratulate.copy())
-
+                # print(upcoming_birthdays)
+            # print(upcoming_birthdays)
         return upcoming_birthdays
-    
-    def data_for_table(self):
-        data=[]
-        i = 0
-        while i <= len(list(self))-1:
-            item=[]
-            item.append(list(self)[i])
-            record = self.find(list(self)[i])
-            item.append(record.phone_list())
-            item.append(record.birthday)
-            data.append(item)
-            i += 1
-        return data

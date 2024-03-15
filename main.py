@@ -51,7 +51,7 @@ def add_contact(args, book:AddressBook,bt:ColorBot):
 def change_contact(args, book:AddressBook, bt:ColorBot):
     name, phone_old, phone_new = args
     record = book.find(name)
-    record.edit_phone(phone_old, phone_new)
+    record.edit_phone(book, phone_old, phone_new)
     display = 'Contact changed'
     return bot.format_display(display)
 
@@ -62,39 +62,43 @@ def show_all(args, book:AddressBook, bt:ColorBot):
 
 
 @input_error
-def get_contact(args, book:AddressBook):
+def get_contact(args, book:AddressBook, bt:ColorBot):
     name = args[0]
     record = book.find(name)
-    return record.phone_list()
+    display = record.phone_list()
+    return bt.format_display(display)
 
 @input_error
-def del_contact(args, book:AddressBook):
+def del_contact(args, book:AddressBook, bt:ColorBot):
     name, phone = args
     record = book.find(name)
     record.remove_phone(phone)
-    return 'Phone deleted'
+    display = 'Phone deleted'
+    return bt.format_display(display)
 
 
 @input_error
-def get_birthday(args, book:AddressBook):
+def get_birthday(args, book:AddressBook, bt:ColorBot):
     name = args[0]
     record = book.find(name)
-    return record.birthday
+    display = record.birthday
+    return bt.format_display(display)
 
 
 @input_error
-def add_birthday(args, book:AddressBook):
+def add_birthday(args, book:AddressBook, bt:ColorBot):
     name, date = args
     record = book.find(name)
     if not record:
         record = Record(name)
         book.add_record(record)
     record.add_birth(date)
-    return 'Birthday added'
+    display = 'Birthday added'
+    return bt.format_display(display)
 
 @input_error
-def to_congratulate(args, book:AddressBook):
-    return book.get_upcoming_birthdays()
+def to_congratulate(args, book:AddressBook, bt:ColorBot):################
+    return bt.birthdays_congratulate(book.get_upcoming_birthdays())
 
 @input_error
 def bot_selection(args, book:AddressBook, bt:ColorBot):
@@ -127,23 +131,23 @@ def main():
         elif command == "hello":
             print("How can I help you?")
         elif command == "bot":
-            print(bot_selection(args, book, bot))
+            print(bot_selection(args, book, bot)) #!
         elif command == "add":
-            print(add_contact(args, book, bot))
+            print(add_contact(args, book, bot))#!
         elif command == "change":
-            print(change_contact(args, book, bot))    #!!!!!
+            print(change_contact(args, book, bot))    #!
         elif command == "all":
-            print(show_all(args, book, bot))
+            print(show_all(args, book, bot))  #!
         elif command == "phone":
-            print(get_contact(args, book))
+            print(get_contact(args, book, bot))  #1
         elif command == "delete":
-            print(del_contact(args, book))
+            print(del_contact(args, book, bot))   #1
         elif command == "add-birthday":
-            print(add_birthday(args, book))
+            print(add_birthday(args, book, bot))  
         elif command == "show-birthday":
-            print(get_birthday(args, book))
+            print(get_birthday(args, book, bot))
         elif command == "birthdays":
-            print(to_congratulate(args, book))
+            print(to_congratulate(args, book, bot))
 
 
         else:
