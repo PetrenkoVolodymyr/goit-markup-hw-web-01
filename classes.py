@@ -111,21 +111,15 @@ class AddressBook(UserDict):
             birth_list.append(birth_dict)
         
         upcoming_birthdays=[]
-        # print(f"birthdays {birth_list}")   
         for user in birth_list:
             birthday = user["birthday"]
 
             if str(birthday) == 'None':            
-                # print("sss")
                 continue
 
-            # print(f"this line {str(birthday)}")
             bir = datetime.strptime(str(birthday), '%Y-%m-%d').date()
-            # print(type(bir))
-            # print(bir)
             today = datetime.today().date()
             curr_birthday = datetime(today.year, bir.month, bir.day).date()
-            # print(curr_birthday)
 
             diff = curr_birthday - today
 
@@ -136,10 +130,7 @@ class AddressBook(UserDict):
                     curr_birthday = curr_birthday + timedelta(days=1)
 
                 cong_date_str = curr_birthday.strftime("%Y-%m-%d")
-                # print(f"dd{cong_date_str}")
 
                 to_congratulate = {"name": user["name"], "congratulation_date": cong_date_str}
                 upcoming_birthdays.append(to_congratulate.copy())
-                # print(upcoming_birthdays)
-            # print(upcoming_birthdays)
         return upcoming_birthdays

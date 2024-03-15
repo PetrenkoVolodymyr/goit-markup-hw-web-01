@@ -68,12 +68,10 @@ class TableBot(Bot):
 
         birthday_list=[]
         i = 0
-        while i <= len(list)-1:
+        while i <= len(list)-1: 
             item=[]
             item.append(list[i]['name'])
             item.append(list[i]['congratulation_date'])
-            # print(list[0]['name'])
-            # print(list[0]['congratulation_date'])
             birthday_list.append(item)
             i += 1
 

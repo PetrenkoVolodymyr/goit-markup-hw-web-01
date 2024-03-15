@@ -97,7 +97,7 @@ def add_birthday(args, book:AddressBook, bt:ColorBot):
     return bt.format_display(display)
 
 @input_error
-def to_congratulate(args, book:AddressBook, bt:ColorBot):################
+def to_congratulate(args, book:AddressBook, bt:ColorBot):
     return bt.birthdays_congratulate(book.get_upcoming_birthdays())
 
 @input_error
@@ -131,17 +131,17 @@ def main():
         elif command == "hello":
             print("How can I help you?")
         elif command == "bot":
-            print(bot_selection(args, book, bot)) #!
+            print(bot_selection(args, book, bot)) 
         elif command == "add":
-            print(add_contact(args, book, bot))#!
+            print(add_contact(args, book, bot))
         elif command == "change":
-            print(change_contact(args, book, bot))    #!
+            print(change_contact(args, book, bot))    
         elif command == "all":
-            print(show_all(args, book, bot))  #!
+            print(show_all(args, book, bot))  
         elif command == "phone":
-            print(get_contact(args, book, bot))  #1
+            print(get_contact(args, book, bot))  
         elif command == "delete":
-            print(del_contact(args, book, bot))   #1
+            print(del_contact(args, book, bot))   
         elif command == "add-birthday":
             print(add_birthday(args, book, bot))  
         elif command == "show-birthday":
